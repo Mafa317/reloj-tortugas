@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cuenta regresiva Congreso Tortugas</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 10px solid #0a7b4a;
+      border-radius: 50%;
+      box-sizing: border-box;
+      text-align: center;
+      color: #0a7b4a;
+      background: transparent;
+      overflow: hidden;
+    }
+    .container h2 {
+      margin: 20px 0 10px 0;
+      font-weight: bold;
+    }
+    #tiempo {
+      position: relative;
+      font-size: 2.5rem;
+      font-weight: bold;
+      line-height: 1.2;
+      margin-top: 10px;
+      z-index: 2;
+      user-select: none;
+    }
+    .tortuga-fondo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 140px;
+      height: 140px;
+      transform: translate(-50%, -50%);
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cuenta regresiva</h2>
+    <div id="tiempo">Cargando...</div>
+    <img src="https://i.postimg.cc/d3JS1r2T/Tortuga-sola.jpg" alt="Tortuga" class="tortuga-fondo" />
+  </div>
+
+  <script>
+    const tiempo = document.getElementById('tiempo');
+
+    // Fecha del evento: 20 junio 2025, 8:30am Venezuela (UTC-4) = 12:30 UTC
+    const targetDate = new Date(Date.UTC(2025, 5, 20, 12, 30, 0)).getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        tiempo.innerHTML = "¡El congreso ha comenzado!";
+        clearInterval(interval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      tiempo.innerHTML = `${days} días<br>${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+    }
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
